@@ -1,0 +1,42 @@
+---
+import { SITE_TITLE } from '../consts';
+---
+
+<header>
+	<nav>
+		<h2><a href="/">{SITE_TITLE}</a></h2>
+		<div class="links">
+			<a href="/#projects">Projects</a>
+			<a href="/blog">Blog</a>
+		</div>
+	</nav>
+</header>
+<style>
+	header {
+		margin: 0;
+		padding: 0 1em;
+		background: var(--bg-elevated);
+		border-bottom: 1px solid var(--border);
+	}
+	h2 {
+		margin: 0;
+		font-size: 1em;
+	}
+	h2 a {
+		color: var(--text);
+		text-decoration: none;
+	}
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	nav a {
+		padding: 1em 0.5em;
+		color: var(--text-muted);
+		text-decoration: none;
+	}
+	nav a:hover {
+		color: var(--accent);
+	}
+</style>

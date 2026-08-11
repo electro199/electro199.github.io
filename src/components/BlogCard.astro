@@ -1,0 +1,107 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, tags } = post.data;
+const href = `/blog/${post.id}/`;
+---
+
+<article class="card">
+	<div class="thumb">
+		<span class="placeholder">{title.charAt(0)}</span>
+	</div>
+	<div class="body">
+		<FormattedDate date={pubDate} />
+		<h3><a class="stretched-link" href={href}>{title}</a></h3>
+		<p>{description}</p>
+		{
+			tags.length > 0 && (
+				<ul class="tags">
+					{tags.map((tag) => (
+						<li>{tag}</li>
+					))}
+				</ul>
+			)
+		}
+	</div>
+</article>
+
+<style>
+	.card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		border-radius: 12px;
+		overflow: hidden;
+		background: var(--bg-elevated);
+		border: 1px solid var(--border);
+		box-shadow: var(--box-shadow);
+		transition:
+			transform 0.15s ease,
+			border-color 0.15s ease;
+	}
+	.card:hover {
+		transform: translateY(-4px);
+		border-color: var(--accent);
+	}
+	.thumb {
+		aspect-ratio: 16 / 9;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+	}
+	.placeholder {
+		font-size: 2.5em;
+		font-weight: 700;
+		color: white;
+	}
+	.body {
+		padding: 1em;
+	}
+	.body time {
+		font-size: 0.8em;
+		color: var(--text-muted);
+	}
+	.body h3 {
+		margin: 0.3em 0;
+		font-size: 1.2em;
+	}
+	.body h3 a {
+		position: relative;
+		z-index: 2;
+		color: var(--text);
+		text-decoration: none;
+	}
+	.stretched-link::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+	}
+	.body p {
+		margin: 0 0 0.6em 0;
+		font-size: 0.9em;
+		color: var(--text-muted);
+	}
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4em;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.tags li {
+		font-size: 0.75em;
+		padding: 0.2em 0.6em;
+		border-radius: 999px;
+		background: rgba(var(--accent-rgb), 12%);
+		color: var(--accent);
+	}
+</style>

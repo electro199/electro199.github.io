@@ -1,0 +1,93 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: post,
+	}));
+}
+
+const post = Astro.props;
+const { title, description, pubDate, updatedDate, tags } = post.data;
+const { Content } = await render(post);
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={`${title} — Aman Raza`} description={description} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<article class="prose">
+				<div class="thumb">
+					<span class="placeholder">{title.charAt(0)}</span>
+				</div>
+				<div class="date">
+					<FormattedDate date={pubDate} />
+					{updatedDate && <span class="updated">Updated <FormattedDate date={updatedDate} /></span>}
+				</div>
+				<h1>{title}</h1>
+				{
+					tags.length > 0 && (
+						<ul class="tags">
+							{tags.map((tag) => (
+								<li>{tag}</li>
+							))}
+						</ul>
+					)
+				}
+				<Content />
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: 720px;
+		max-width: calc(100% - 2em);
+	}
+	.thumb {
+		aspect-ratio: 21 / 9;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 12px;
+		background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+		margin-bottom: 1em;
+	}
+	.placeholder {
+		font-size: 3em;
+		font-weight: 700;
+		color: white;
+	}
+	.date {
+		font-size: 0.9em;
+		color: var(--text-muted);
+		display: flex;
+		gap: 1em;
+	}
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4em;
+		list-style: none;
+		margin: 1em 0;
+		padding: 0;
+	}
+	.tags li {
+		font-size: 0.8em;
+		padding: 0.25em 0.7em;
+		border-radius: 999px;
+		background: rgba(var(--accent-rgb), 12%);
+		color: var(--accent);
+	}
+</style>
