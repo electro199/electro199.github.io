@@ -24,11 +24,3 @@ Personal portfolio/blog built with [Astro](https://astro.build), deployed to Git
 Pushes to `main` trigger [.github/workflows/deploy.yml](.github/workflows/deploy.yml), which builds the site and publishes it to GitHub Pages.
 
 One-time setup: in the repo's **Settings → Pages**, set **Source** to **GitHub Actions**.
-
-## TODO before going live
-
-- Fill in tagline/bio/skills placeholders in [src/pages/index.astro](src/pages/index.astro)
-- Replace placeholder description in [src/consts.ts](src/consts.ts)
-- Replace the `your-email@example.com` / LinkedIn / X placeholders in [Header](src/components/Header.astro), [Footer](src/components/Footer.astro), and [index.astro](src/pages/index.astro)
-- Replace `public/favicon.svg` / `favicon.ico`
-- Replace the placeholder entries in `src/content/projects/` and `src/content/blog/` with real content
